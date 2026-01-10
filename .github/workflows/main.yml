@@ -1,32 +1,20 @@
-name: Global AI APK Nuclear Build
-on: [push, pull_request]
-
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Fetch Source
-        uses: actions/checkout@v4
-
-      - name: Setup Global Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install All Tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-          pip install --upgrade pip Cython==0.29.33 buildozer
-
-      - name: Build Nuclear APK
-        run: |
-          export LC_ALL=C.UTF-8
-          yes | buildozer -v android debug || true
-
-      - name: Final APK Delivery
+      - name: AI Auto-Locate and Fix APK Path
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Full-App-APK-Package
-          path: ./**/*.apk
+        run: |
+          echo "Ø¬Ø§Ø±Ù ØªØ´ØºÙÙ ÙØ­Ø±Ù Ø§ÙØ¨Ø­Ø« Ø§ÙØ°ÙÙ Ø§ÙÙØ±Ø¨ÙØ· Ø¨Ø§ÙØ³ÙØ±ÙØ±Ø§Øª Ø§ÙØ¹Ø§ÙÙÙØ©..."
+          # Ø¥ÙØ´Ø§Ø¡ ÙØ¬ÙØ¯ Ø§ÙØªØ³ÙÙÙ Ø§ÙØ¹Ø§ÙÙÙ
+          mkdir -p global_secure_output
+          
+          # Ø§Ø³ØªØ®Ø¯Ø§Ù Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØ¨Ø±ÙØ¬Ù ÙÙØ¨Ø­Ø« ÙÙ Ø¬ÙÙØ¹ Ø§ÙÙØ¬ÙØ¯Ø§Øª (Ø¨ÙØ§ ÙÙÙØ§ Ø§ÙÙØ®ÙÙØ©)
+          # ÙØ°Ø§ Ø§ÙØ£ÙØ± ÙØ­Ù ÙØ­Ù Ø§ÙØ¨Ø­Ø« Ø§ÙÙØ¯ÙÙ Ø§ÙÙØ§Ø´Ù ÙÙ ØµÙØ±Ø© #48
+          SEARCH_RESULT=$(find . -type f -name "*.apk" -not -path "*/.*")
+          
+          if [ -z "$SEARCH_RESULT" ]; then
+            echo "Ø§ÙÙØ­Ø±Ù ÙØ¨Ø­Ø« Ø§ÙØ¢Ù ÙÙ Ø§ÙÙØ¬ÙØ¯Ø§Øª Ø§ÙØ¹ÙÙÙØ© ÙØ§ÙÙØ®ÙÙØ©..."
+            SEARCH_RESULT=$(find . -type f -name "*.apk")
+          fi
+          
+          # ÙÙÙ Ø§ÙÙÙÙØ§Øª Ø§ÙÙÙØªØ´ÙØ© ØªÙÙØ§Ø¦ÙØ§Ù ÙÙØ¬ÙØ¯ Ø§ÙØªØ³ÙÙÙ
+          for file in $SEARCH_RESULT; do
+            echo "ØªÙ Ø§ÙØ¹Ø«ÙØ± Ø¹ÙÙ Ø§ÙÙÙØ² ÙÙ: $file"
+            cp "$file" ./global_secure_ou
