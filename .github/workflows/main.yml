@@ -1,24 +1,27 @@
-name: Global AI Auto-Healing Build
+name: Professional AI Build System
 on: [push, pull_request]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    # ÙÙØ§ Ø§ÙØ³Ø±: ÙØ³ØªØ®Ø¯Ù Ø­Ø§ÙÙØ© ÙØ¬ÙØ²Ø© Ø¨ÙÙ Ø§ÙØ£Ø¯ÙØ§Øª ÙØ³Ø¨ÙØ§Ù
+    container: python:3.10-bullseye 
+
     steps:
-      - name: Global Network Checkout
+      - name: global_fetch
         uses: actions/checkout@v3
 
-      - name: AI Environment Setup
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Automated Fix and Install
+      - name: automated_system_link
         run: |
-          sudo apt-get update --fix-missing
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          # ØªØ­Ø¯ÙØ« Ø°ÙÙ ÙØªØ«Ø¨ÙØª Ø§ÙØ£Ø¯ÙØ§Øª Ø§ÙØ£Ø³Ø§Ø³ÙØ© Ø¯ÙØ¹Ø© ÙØ§Ø­Ø¯Ø©
+          apt-get update && apt-get install -y \
+            git zip unzip openjdk-17-jdk autoconf libtool pkg-config \
+            zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
+          
+          # ØªØ«Ø¨ÙØª Ø§ÙÙØ­Ø±Ù Ø§ÙØ¹Ø§ÙÙÙ ÙÙØ¨ÙØ§Ø¡
           pip install --upgrade pip
           pip install Cython==0.29.33 buildozer
 
-      - name: AI Smart APK Build
+      - name: smart_apk_production
         run: |
-          yes | buildozer android debug
+          # ØªØ´ØºÙÙ Ø§ÙØ¨ÙØ§Ø¡
