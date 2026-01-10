@@ -1,26 +1,40 @@
-name: AI_ULTIMATE_DOWNLOAD_PATH_SYSTEM
-on: [push]
+name: AI_ULTIMATE_AUTO_FIX_SYSTEM
+on: [push, pull_request]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: ð°ï¸ Global Sync
+      - name: ð°ï¸ Global Source Sync
         uses: actions/checkout@v4
 
-      - name: ð§  AI Path Finder & Storage
-        run: |
-          # Ø¥ÙØ´Ø§Ø¡ ÙØ³Ø§Ø± ØªØ­ÙÙÙ Ø¹Ø§ÙÙÙ Ø¨Ø§Ø³Ù "Downloads" Ø¯Ø§Ø®Ù Ø§ÙØ³ÙØ±ÙØ±
-          mkdir -p Downloads_Ready_To_Ship
-          
-          # Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙÙØ¨Ø­Ø« Ø¹Ù Ø£Ù APK ÙØ§ØªØ¬ ÙÙØ¶Ø¹Ù ÙÙ Ø§ÙÙØ¬ÙØ¯ Ø§ÙÙÙØ­Ø¯
-          # ÙÙÙØ§ ÙØ§Ù ÙÙØ§Ù ÙØ¬ÙØ¯ Ø§ÙÙÙÙ ÙÙ Ø§ÙØ³ÙØ±ÙØ±Ø Ø³ÙØªÙ Ø§ÙØ¹Ø«ÙØ± Ø¹ÙÙÙ
-          find . -name "*.apk" -exec cp {} Downloads_Ready_To_Ship/ \;
-          
-          echo "AI Message: Path identified and files moved to Download folder successfully."
-
-      - name: ð¦ Direct Link for Download (1,000,000% Working)
-        uses: actions/upload-artifact@v4
+      - name: ð§  AI Environment Setup (JDK 17)
+        uses: actions/setup-java@v4
         with:
-          name: Global_AI_Build_Result
-          # ÙØ°Ø§ ÙÙ Ø§ÙÙØ³Ø§Ø± Ø§Ù
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: ð Rocket Speed Android Build
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
+          
+          # Ø§ÙÙØ±Ø­ÙØ© Ø§ÙØ°ÙÙØ©: Ø§ÙØ¨Ø­Ø« Ø§ÙØ´Ø§ÙÙ Ø¹Ù Ø£Ù ÙÙÙ APK ÙÙ Ø§ÙØ³ÙØ±ÙØ±
+          echo "AI Logic: Scanning all directories for APK files..."
+          mkdir -p final_output_storage
+          
+          # ÙØ°Ø§ Ø§ÙØ£ÙØ± ÙÙ "Ø§ÙØ±Ø§Ø¯Ø§Ø±" Ø§ÙØ°Ù ÙØ¬Ø¯ Ø§ÙÙÙÙ ÙÙÙØ§ ÙØ§Ù ÙÙØ§ÙÙ
+          find . -name "*.apk" -type f -exec cp {} final_output_storage/ \;
+          
+          # Ø§ÙØªØ£ÙØ¯ ÙÙ ÙØ¬Ø§Ø­ Ø§ÙØ¹ÙÙÙØ© ÙØ·Ø¨Ø§Ø¹Ø© Ø§ÙÙØªØ§Ø¦Ø¬ ÙÙØ´ÙØ§ÙÙØ©
+          if [ -z "$(ls -A final_output_storage)" ]; then
+             echo "ERROR: AI could not find the APK. Printing full file tree for diagnosis..."
+             ls -R
+             exit 1
+          else
+             echo "SUCCESS: AI discovered the following files:"
+             ls final_output_storage/
+          fi
+
+      - name: ð¦ Direct Link for Download (Full Option)
+        uses: actions/upload-artifact@v
