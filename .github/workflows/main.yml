@@ -1,32 +1,31 @@
-name: Global Nuclear Missile V4
+name: Nuclear Rocket Final
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: ð Global Fetching
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: ð§  AI Environment Setup
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: ð ï¸ Universal Build Tools
+      - name: Install Tools
         run: |
-          sudo apt-get update --fix-missing
-          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev || true
+          sudo apt-get update
+          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
           pip install --upgrade pip
           pip install Cython==0.29.33 buildozer
 
-      - name: ð¦ Production APK (The Real Build)
+      - name: Build APK
         run: |
           export LC_ALL=C.UTF-8
-          # Ø§ÙØ³Ø·Ø± Ø¯Ù ÙÙ Ø§ÙØ³Ø±: Ø¨ÙØ¬Ø¨Ø± Ø§ÙØ³ÙØ±ÙØ± ÙØ®ÙØµ ÙÙÙÙØ§ÙØ© ÙÙØ·ÙØ¹ Ø§ÙÙÙÙ
           yes | buildozer android debug
 
-      - name: ð¥ Deliver APK (The Final Move)
-        if: always()
+      - name: Upload APK
         uses: actions/upload-artifact@v3
-        wit
+        with:
+          name: Final-APK
+          path: bin/*.apk
