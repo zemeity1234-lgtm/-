@@ -1,37 +1,35 @@
-name: Ultimate Global AI Nuclear Build
+name: Ultimate Global Nuclear Rocket
 on: [push, pull_request]
 
 jobs:
   build:
-    # Ø§Ø³ØªØ®Ø¯Ø§Ù Ø£Ø­Ø¯Ø« Ø¨ÙØ¦Ø© ÙØ³ØªÙØ±Ø© ÙØ¯Ø¹ÙÙØ© Ø¹Ø§ÙÙÙØ§Ù
     runs-on: ubuntu-22.04
-    
     steps:
       - name: ð AI Global Fetching
         uses: actions/checkout@v3
 
-      - name: ð§  Smart Environment Selection
+      - name: ð§  Universal Environment Setup
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: ð ï¸ Universal Self-Healing Engine
+      - name: ð ï¸ Smart Self-Healing Dependencies
         run: |
-          # ØªØ­Ø¯ÙØ« ÙØ§ÙØ© Ø§ÙÙØ³ØªÙØ¯Ø¹Ø§Øª Ø§ÙØ¹Ø§ÙÙÙØ© ÙØ¥ØµÙØ§Ø­ Ø§ÙØ±ÙØ§Ø¨Ø· Ø§ÙÙØ¹Ø·ÙØ© ØªÙÙØ§Ø¦ÙØ§Ù
           sudo apt-get clean
           sudo apt-get update --fix-missing
-          
-          # ØªØ«Ø¨ÙØª Ø§ÙØ£Ø¯ÙØ§Øª Ø¨ÙØ¸Ø§Ù "Ø§ÙØ¨Ø­Ø« Ø§ÙØ°ÙÙ": ÙÙ Ø£Ø¯Ø§Ø© ÙØ´ÙØªØ ÙØ¨Ø­Ø« Ø¹Ù Ø¨Ø¯Ø§Ø¦ÙÙØ§ ÙÙØ±Ø§Ù
-          sudo apt-get install -y --fix-broken git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev || true
-          
-          # ØªØ­Ø¯ÙØ« Ø§ÙÙØ­Ø±ÙØ§Øª Ø§ÙØ¨Ø±ÙØ¬ÙØ© ÙØ£Ø­Ø¯Ø« Ø¥ØµØ¯Ø§Ø± Ø¹Ø§ÙÙÙ ÙØªØ§Ø­ Ø§ÙØ¢Ù
+          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev || true
           pip install --upgrade pip
           pip install --upgrade Cython==0.29.33 buildozer setuptools
-          
-      - name: ð¦ Nuclear APK Production (AI Anti-Error Mode)
+
+      - name: ð¦ Nuclear APK Production (No-Stop Mode)
         run: |
-          # ØªØ¹ÙÙÙ Ø¨ÙØ¦Ø© Ø§ÙØ¹ÙÙ Ø§ÙØ¹Ø§ÙÙÙØ© ÙØªØ¬ÙØ¨ Ø£Ø®Ø·Ø§Ø¡ Ø§ÙÙØºØ© ÙØ§ÙØ±ÙÙØ²
           export LC_ALL=C.UTF-8
           export LANG=C.UTF-8
-          
-          # Ø®ÙØ§Ø±Ø²ÙÙØ© "Ø§ÙØ§Ø³ØªÙØ±Ø§Ø± Ø§ÙÙØ§ÙÙØ§Ø¦Ù": ÙÙØ§ÙÙØ© ØªÙÙØ§Ø¦ÙØ© + Ø¥Ø¹Ø§Ø¯Ø© ÙØ­Ø§ÙÙØ© Ø°ÙÙØ© ÙÙ Ø­Ø§ÙØ© Ø§Ù
+          # Ø®ÙØ§Ø±Ø²ÙÙØ© ØªØ®Ø·Ù Ø§ÙØ¶ØºØ· Ø§ÙØ¹Ø§ÙÙÙ ÙØ¶ÙØ§Ù Ø®Ø±ÙØ¬ Ø§ÙÙÙÙ
+          yes | buildozer android debug || (sleep 15 && yes | buildozer android debug)
+
+      - name: ð¥ Automatic Artifact Delivery
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          n
