@@ -1,4 +1,4 @@
-name: Global AI Auto-Build
+name: Global AI Auto-Healing Build
 on: [push, pull_request]
 jobs:
   build:
@@ -7,26 +7,18 @@ jobs:
       - name: Global Network Checkout
         uses: actions/checkout@v3
 
-      - name: AI Python Environment Setup
+      - name: AI Environment Setup
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: Auto-Search & Install Missing Dependencies
+      - name: Automated Fix and Install
         run: |
-          # ØªØ­Ø¯ÙØ« Ø§ÙØ´Ø¨ÙØ© ÙØ§ÙØ¨Ø­Ø« Ø¹Ù Ø§ÙØ±ÙØ§Ø¨Ø· Ø§ÙØ¨Ø¯ÙÙØ© ØªÙÙØ§Ø¦ÙØ§Ù
           sudo apt-get update --fix-missing
-          
-          # ØªØ«Ø¨ÙØª Ø§ÙØ£Ø¯ÙØ§Øª Ø§ÙØ£Ø³Ø§Ø³ÙØ© ÙØ¹ Ø®Ø§ØµÙØ© Ø§ÙÙÙØ§ÙÙØ© Ø§ÙØªÙÙØ§Ø¦ÙØ© (Global Yes)
-          sudo apt-get install -y --no-install-recommends \
-            git zip unzip openjdk-17-jdk python3-pip autoconf libtool \
-            pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev \
-            libtinfo5 cmake libffi-dev libssl-dev
-
-          # ØªØ­Ø¯ÙØ« ÙÙØªØ¨Ø§Øª Ø¨Ø§ÙØ«ÙÙ Ø§ÙØ°ÙÙØ©
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
           pip install --upgrade pip
           pip install Cython==0.29.33 buildozer
 
-      - name: AI Smart APK Generation
+      - name: AI Smart APK Build
         run: |
-          # ØªØ
+          yes | buildozer android debug
