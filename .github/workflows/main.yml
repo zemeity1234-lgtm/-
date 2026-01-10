@@ -5,7 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build with Buildozer
-        uses: ArtemGr/buildozer-action@v1.6.1
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          buildozer_version: master
+          python-version: 3.9
+      - name: Install buildozer
+        run: pip install buildozer
+      - name: Build with Buildozer
+        run: buildozer android debug
