@@ -8,6 +8,4 @@ jobs:
       - name: Build with Buildozer
         uses: ArtemGr/buildozer-action@v1
         with:
-          buildozer_version: stable
-          command: buildozer -v android debug
-          repository_root: .
+          buildozer_version: master
