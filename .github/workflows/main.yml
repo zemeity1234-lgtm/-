@@ -1,35 +1,32 @@
-name: Ultimate Global Nuclear Rocket
+name: Global Nuclear Missile V4
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: ð AI Global Fetching
+      - name: ð Global Fetching
         uses: actions/checkout@v3
 
-      - name: ð§  Universal Environment Setup
+      - name: ð§  AI Environment Setup
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: ð ï¸ Smart Self-Healing Dependencies
+      - name: ð ï¸ Universal Build Tools
         run: |
-          sudo apt-get clean
           sudo apt-get update --fix-missing
           sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev || true
           pip install --upgrade pip
-          pip install --upgrade Cython==0.29.33 buildozer setuptools
+          pip install Cython==0.29.33 buildozer
 
-      - name: ð¦ Nuclear APK Production (No-Stop Mode)
+      - name: ð¦ Production APK (The Real Build)
         run: |
           export LC_ALL=C.UTF-8
-          export LANG=C.UTF-8
-          # Ø®ÙØ§Ø±Ø²ÙÙØ© ØªØ®Ø·Ù Ø§ÙØ¶ØºØ· Ø§ÙØ¹Ø§ÙÙÙ ÙØ¶ÙØ§Ù Ø®Ø±ÙØ¬ Ø§ÙÙÙÙ
-          yes | buildozer android debug || (sleep 15 && yes | buildozer android debug)
+          # Ø§ÙØ³Ø·Ø± Ø¯Ù ÙÙ Ø§ÙØ³Ø±: Ø¨ÙØ¬Ø¨Ø± Ø§ÙØ³ÙØ±ÙØ± ÙØ®ÙØµ ÙÙÙÙØ§ÙØ© ÙÙØ·ÙØ¹ Ø§ÙÙÙÙ
+          yes | buildozer android debug
 
-      - name: ð¥ Automatic Artifact Delivery
+      - name: ð¥ Deliver APK (The Final Move)
         if: always()
         uses: actions/upload-artifact@v3
-        with:
-          n
+        wit
