@@ -1,27 +1,26 @@
-name: Professional AI Build System
+name: Global AI Build Station
 on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    # ÙÙØ§ Ø§ÙØ³Ø±: ÙØ³ØªØ®Ø¯Ù Ø­Ø§ÙÙØ© ÙØ¬ÙØ²Ø© Ø¨ÙÙ Ø§ÙØ£Ø¯ÙØ§Øª ÙØ³Ø¨ÙØ§Ù
-    container: python:3.10-bullseye 
-
+    runs-on: ubuntu-22.04
     steps:
-      - name: global_fetch
+      - name: Fetching Code
         uses: actions/checkout@v3
 
-      - name: automated_system_link
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Tools
         run: |
-          # ØªØ­Ø¯ÙØ« Ø°ÙÙ ÙØªØ«Ø¨ÙØª Ø§ÙØ£Ø¯ÙØ§Øª Ø§ÙØ£Ø³Ø§Ø³ÙØ© Ø¯ÙØ¹Ø© ÙØ§Ø­Ø¯Ø©
-          apt-get update && apt-get install -y \
-            git zip unzip openjdk-17-jdk autoconf libtool pkg-config \
-            zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-          
-          # ØªØ«Ø¨ÙØª Ø§ÙÙØ­Ø±Ù Ø§ÙØ¹Ø§ÙÙÙ ÙÙØ¨ÙØ§Ø¡
+          sudo apt-get update --fix-missing
+          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev || true
           pip install --upgrade pip
           pip install Cython==0.29.33 buildozer
 
-      - name: smart_apk_production
+      - name: Build APK
         run: |
-          # ØªØ´ØºÙÙ Ø§ÙØ¨ÙØ§Ø¡
+          export LC_ALL=C.UTF-8
+          yes | buildozer android debug
