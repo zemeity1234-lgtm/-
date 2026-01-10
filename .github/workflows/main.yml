@@ -1,4 +1,4 @@
-name: Global AI Build System
+name: Global AI Final Delivery
 on: [push, pull_request]
 
 jobs:
@@ -13,24 +13,23 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Global Setup
+      - name: Global Build Tools
         run: |
           sudo apt-get update
           sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
           pip install --upgrade pip Cython==0.29.33 buildozer
 
-      - name: Build and Move to Bin
+      - name: Terminal Build and Bin Sync
         run: |
           export LC_ALL=C.UTF-8
-          # Smart loop to prevent server timeout
           yes | buildozer -v android debug || true
-          # Creating bin folder manually to ensure file safety
-          mkdir -p bin
-          cp -r ./**/bin/*.apk ./bin/ 2>/dev/null || true
+          # Force synchronization to the final bin folder
+          mkdir -p bin_output
+          cp -r ./**/bin/*.apk ./bin_output/ 2>/dev/null || true
 
-      - name: Direct APK Delivery
+      - name: Download Your APK Here
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Final-Nuclear-APK
-          path: bin/*.apk
+          name: Mobile-App-Final-Package
+          path: bin_output/*.apk
