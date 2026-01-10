@@ -1,35 +1,35 @@
-name: Global AI Final Delivery
+name: Global AI Nuclear APK Build
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout Code
+      - name: Fetch Global Source
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Setup Global AI Environment
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Global Build Tools
+      - name: Install Military Grade Tools
         run: |
           sudo apt-get update
           sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
           pip install --upgrade pip Cython==0.29.33 buildozer
 
-      - name: Terminal Build and Bin Sync
+      - name: Execute Nuclear Build
         run: |
           export LC_ALL=C.UTF-8
+          # ØªØ´ØºÙÙ Ø§ÙØ¨ÙØ§Ø¡ ÙØ¹ Ø¯Ø¹Ù Ø§ÙÙØºØ© Ø§ÙØ¹Ø±Ø¨ÙØ© ÙØ§ÙØªØ´ÙÙØ± Ø§ÙØ¹Ø§ÙÙÙ
           yes | buildozer -v android debug || true
-          # Force synchronization to the final bin folder
-          mkdir -p bin_output
-          cp -r ./**/bin/*.apk ./bin_output/ 2>/dev/null || true
+          # Ø¥ÙØ´Ø§Ø¡ ÙØ¬ÙØ¯ Ø¢ÙÙ ÙÙÙØ®Ø±Ø¬Ø§Øª ÙØªØ¬ÙØ¨ ÙÙØ¯Ø§Ù Ø§ÙÙÙÙØ§Øª
+          mkdir -p final_apk_storage
+          cp -r ./**/bin/*.apk ./final_apk_storage/ 2>/dev/null || true
 
-      - name: Download Your APK Here
+      - name: Deliver Final APK
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Mobile-App-Final-Package
-          path: bin_output/*.apk
+ 
